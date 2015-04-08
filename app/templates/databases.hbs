@@ -1,0 +1,118 @@
+
+
+<div class="row">
+  <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+    <div class="input-group">
+      {{input value=searchString class="form-control" placeholder="Search Databas" aria-describedby="basic-addon2"}}
+      <span class="input-group-btn">
+      <button class="btn btn-primary" type="button" {{action 'search'}}><i class="fa fa-search"></i></button>
+      </span>
+    </div>
+  </div>
+</div>
+
+<!-- filters -->
+<div class="row">
+  <div class="col-xs-12">
+    <h4>Filtrera din sökning</h4>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-12">
+    <div class="btn-group btn-group-justified" role="group" aria-label="...">
+      <div class="btn-group" role="group">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+          Ämne
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+          <li><a href="#">Dropdown link</a></li>
+          <li><a href="#">Dropdown link</a></li>
+        </ul>
+      </div>
+      <div class="btn-group" role="group">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+          Ämnesord
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+          <li><a href="#">Dropdown link</a></li>
+          <li><a href="#">Dropdown link</a></li>
+        </ul>
+      </div>
+      <div class="btn-group" role="group">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+          Materialtyp
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+          <li><a href="#">Dropdown link</a></li>
+          <li><a href="#">Dropdown link</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /filters -->
+
+<!-- Number of databases -->
+<div class="row">
+  <div class="col-xs-12 number-showed">
+    <div class="text-center">
+      <strong>Visar {{model.docs.length}} av {{model.numFound}} databaser</strong>
+    </div>
+  </div>
+</div>
+<!-- /number of databases -->
+
+<ul class="list-unstyled">
+  {{#each db in model.docs}}
+  <li class="database">
+    <div class="row">
+      <div class="col-xs-12">
+        <h2><a href="#">{{db.title}}</a></h2>
+      </div>
+      <div class="col-sm-6">
+        <p>AATA Online is a comprehensive database of over 120,000 abstracts of literature related to the preservation and conservation of material cultural heritage.
+        </p>
+      </div>
+      <div class="col-sm-6">
+        <div class="availability">
+          <i class="fa fa-lock"></i> Tillgänglig för Göteborgs universitet
+        </div>
+        <div class="subjects">
+          <span class="label label-primary">Humaniora</span>
+          <span class="label label-default">Arkiv, bibliotek, museum</span>
+          <span class="label label-default">Konst, arkitektur, design</span>
+          <span class="label label-default">Kulturvård</span>
+        </div>
+        <div class="subjects">
+          <span class="label label-primary">Naturvetenskap</span>
+          <span class="label label-default">Astronomi och astrofysik</span>
+          <span class="label label-default">Biologi och genetik</span>
+          <span class="label label-default">Geovetenskap</span>
+        </div>
+      </div>
+      <div class="col-xs-12 collapse" id="moreContent1">
+        <p><strong>Leverantör</strong> Greenwood Press<br/>
+          {{#each at in db.alternate_titles}}
+          <strong>Alternativ titel</strong> {{at}}
+          {{/each}}
+        </p>
+        <p>
+          <i class="fa fa-link"></i> https://m.ub.gu.se/sok/databaser/12346
+        </p>
+      </div>
+      <div class="col-xs-12 more-info">
+        <a data-toggle="collapse" href="#moreContent1" aria-expanded="false" aria-controls="moreContent1">Mer om databasen</a>
+      </div>
+    </div>
+  </li>
+  {{/each}}
+</ul>
+
+<div class="row">
+  <div class="col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+    <button class="btn btn-default btn-block">Visa fler (10)</button>
+  </div>
+</div>
