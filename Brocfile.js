@@ -29,5 +29,6 @@ app.import("bower_components/font-awesome/fonts/fontawesome-webfont.svg", { dest
 app.import("bower_components/font-awesome/fonts/fontawesome-webfont.ttf", { destDir: "fonts" });
 app.import("bower_components/font-awesome/fonts/fontawesome-webfont.woff", { destDir: "fonts" });
 app.import("bower_components/font-awesome/fonts/FontAwesome.otf", { destDir: "fonts" });
+app.import("vendor/bootstrap-multiselect/bootstrap-multiselect.js");
 
 module.exports = app.toTree();

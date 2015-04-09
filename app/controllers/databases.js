@@ -32,6 +32,15 @@ export default Ember.Controller.extend({
     this.set('category', this.get('selectedCategory.id'));
   }.observes('selectedCategory'),
 
+  mainSubjects: function() {
+    return [
+    {value: "1", label: "Humaniora"},
+    {value: "21", label: "Konstiga amnen"},
+    {value: "3", label: "Sportkunskap"},
+    {value: "4", label: "Vinkelvoltar 101"},
+    ];
+  }.property('controllers.application.model.categories'),
+
   actions: {
     increaseRows: function() {
       var currentRows = this.get('rows');
