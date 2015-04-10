@@ -11,16 +11,6 @@ export default Ember.Component.extend({
       return false;
     }
     return true;
-  }),
+  })
 
-  keyword: function() {
-    return this.get('keywords').findBy('hash_value', this.get('keywordId'));
-  }.property('keyword'),
-
-  parent: function() {
-    if (this.get('keyword.parent')) {
-      return this.get('keywords').findBy('id', this.get('keyword.parent'));;
-    }
-    return false;
-  }
 });

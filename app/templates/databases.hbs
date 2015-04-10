@@ -82,11 +82,7 @@
         <div class="availability">
           <i class="fa fa-lock"></i> Tillgänglig för Göteborgs universitet
         </div>
-        <div class="subects">
-          {{#each keyword in db.keywords}}
-            {{keyword-item keywordId=keyword keywords=keywords}}
-          {{/each}}
-        </div>
+        {{keyword-list keywords=keywords dbKeywords=db.keywords_sv}}
         <div class="subjects">
         {{#each keyword in db.parentKeywords}}
           {{keyword}}

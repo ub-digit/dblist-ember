@@ -1,0 +1,7 @@
+{{#each keyword in parentKeywords}}
+  {{keyword-item keyword=keyword}}
+  {{#each child in keyword.children}}
+    {{keyword-item keyword=child}}
+  {{/each}}
+  <br/>
+{{/each}}
