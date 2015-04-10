@@ -23,7 +23,7 @@ export default Ember.Controller.extend({
   }.property('model.databases', 'model.numFound'),
 
   rowsToGo: function() {
-    return this.get('model.numFound') - this.get('model.databases.length')
+    return this.get('model.numFound') - this.get('model.databases.length');
   }.property('model.databases', 'model.numFound'),
 
   categoriesBinding: 'controllers.application.model.categories',
