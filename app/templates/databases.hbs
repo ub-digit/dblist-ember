@@ -117,9 +117,9 @@
             {{#each publisher in db.publishers}}
             <strong>Leverantör: </strong>{{publisher}}<br/>
             {{/each}}
-            {{#if db.categories}}
+            {{#if db.categories_sv}}
             <strong>Materialtyp: </strong>
-            {{#each category in db.categories}}
+            {{#each category in db.categories_sv}}
             {{category-item categoryId=category categories=categories}}
             {{/each}}
             {{/if}}
