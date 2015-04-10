@@ -82,17 +82,15 @@
         <div class="availability">
           <i class="fa fa-lock"></i> Tillgänglig för Göteborgs universitet
         </div>
-        <div class="subjects">
-          <span class="label label-primary">Humaniora</span>
-          <span class="label label-default">Arkiv, bibliotek, museum</span>
-          <span class="label label-default">Konst, arkitektur, design</span>
-          <span class="label label-default">Kulturvård</span>
+        <div class="subects">
+          {{#each keyword in db.keywords}}
+            {{keyword-item keywordId=keyword keywords=keywords}}
+          {{/each}}
         </div>
         <div class="subjects">
-          <span class="label label-primary">Naturvetenskap</span>
-          <span class="label label-default">Astronomi och astrofysik</span>
-          <span class="label label-default">Biologi och genetik</span>
-          <span class="label label-default">Geovetenskap</span>
+        {{#each keyword in db.parentKeywords}}
+          {{keyword}}
+        {{/each}}
         </div>
       </div></div>
       <div class="row">

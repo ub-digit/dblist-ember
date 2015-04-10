@@ -27,10 +27,10 @@ export default Ember.Controller.extend({
   }.property('model.databases', 'model.numFound'),
 
   categoriesBinding: 'controllers.application.model.categories',
+  keywordsBinding: 'controllers.application.model.keywords',
 
   selectedCategory: function() {
     var category = this.get('categories').findBy('hash_value', this.get('category'));
-    console.log('cat', category, this.get('categories'), this.get('category'));
     return category;
   }.property('category'),
 
