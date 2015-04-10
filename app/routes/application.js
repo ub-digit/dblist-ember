@@ -4,11 +4,12 @@ import ENV from 'dblist-ember/config/environment';
 export default Ember.Route.extend({
   model: function() {
     var that = this;
+    var language = 'sv';
     // Used to load data that will not be changed during runtime
     return Ember.RSVP.hash({
       descriptions: this.callQuery('/dblist_descriptions/select?q=*%3A*&wt=json&rows=10000'),
-      categories: this.callQuery('/dblist_categories/select?q=*%3A*&wt=json&rows=10000'),
-      keywords: this.callQuery('/dblist_keywords/select?q=*%3A*&wt=json&rows=10000')
+      categories: this.callQuery('/dblist_categories/select?q=(*%3A*)AND(language%3A' + language +')&wt=json&rows=10000'),
+      keywords: this.callQuery('/dblist_keywords/select?q=(*%3A*)AND(language%3A' + language + ')&wt=json&rows=10000')
     });
   },
   

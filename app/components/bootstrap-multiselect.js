@@ -9,6 +9,8 @@ export default Ember.Component.extend({
   didInsertElement: function(){
     var that = this;
     this.$().multiselect({
+      disableIfEmpty: true,
+      nonSelectedText: 'Aemnesord',
       onChange:function(element) {
         var items = that.$('option:selected');
         var selected = [];
@@ -34,5 +36,5 @@ export default Ember.Component.extend({
       that.$().multiselect('destroy');
       that.rerender();
     }
-  }.observes('selected')
+  }.observes('selected', 'parentKeyword')
 });

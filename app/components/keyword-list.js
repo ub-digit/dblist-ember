@@ -23,5 +23,5 @@ export default Ember.Component.extend({
       entry.set('children', childKeywords);
     });
     return parentKeywords;
-  }.property('keywordObjects')
+  }.property('dbKeywords')
 });

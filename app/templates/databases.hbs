@@ -20,18 +20,24 @@
 <div class="row">
   <div class="col-xs-12">
     <div class="btn-group btn-group-justified" role="group" aria-label="...">
-    {{bootstrap-multiselect options=mainSubjects id='keyword-selector' selected=selectedKeywords}}
+    
 
       <div class="btn-group" role="group">
-        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-          Ämnesord
+        <button type="button" {{bind-attr class=":btn :dropdown-toggle selectedParentKeyword:btn-primary:btn-default"}} data-toggle="dropdown" aria-expanded="false">
+          {{#if selectedParentKeyword}}
+          {{selectedParentKeyword.keyword}}
+          {{else}}
+          Huvudaemne
+          {{/if}}
           <span class="caret"></span>
         </button>
         <ul class="dropdown-menu" role="menu">
-          <li><a href="#">Dropdown link</a></li>
-          <li><a href="#">Dropdown link</a></li>
+          {{#each keyword in parentKeywords}}
+          <li><a href="" {{action 'setParentKeyword' keyword}}>{{keyword.keyword}}</a></li>
+          {{/each}}
         </ul>
       </div>
+      {{bootstrap-multiselect options=childKeywords id='keyword-selector' selected=selectedKeywords parentKeyword=parentKeyword}}
       <div class="btn-group" role="group">
         <button type="button" {{bind-attr class=":btn :dropdown-toggle selectedCategory:btn-primary:btn-default"}} data-toggle="dropdown" aria-expanded="false">
           {{#if selectedCategory}}

@@ -12,23 +12,50 @@ export default Ember.Route.extend({
     },
     category: {
       refreshModel: true
+    },
+    parentKeyword: {
+      refreshModel: true
+    },
+    selectedKeywords: {
+      refreshModel: true
     }
   },
   model: function(params) {
     var that = this;
+    var language = 'sv';
     var rows = params.rows;
     var searchString = '((title%3A*' + params.searchString + '*)OR(libris_id%3A' + params.searchString + '))';
     var categoryString = '';
+    var keywordString = '';
     //console.log(this.controllerFor('databases'));
     if (params.category) {
-      categoryString = 'AND(categories%3A' + params.category + ')';
+      categoryString = 'AND(categories_' + language + '%3A' + params.category + ')';
+    }
+    if (params.parentKeyword) {
+      keywordString = 'AND(keywords_' + language + '%3A' + params.parentKeyword + ')';
+    }
+    if (params.selectedKeywords) {
+      console.log(params.selectedKeywords);
+      var list = Ember.A(params.selectedKeywords.split(':'));
+      keywordString += 'AND(';
+      var keywordsCount = list.length;
+      var count = 0;
+      list.forEach(function(entry){
+        keywordString += '(keywords_' + language + '%3A' + entry + ')';
+        count++;
+        if (count < keywordsCount) {
+          keywordString += 'OR';
+        }
+      })
+      keywordString += ')'
+      //keywordString += 'AND(keywords_' + language + '%3A' + params.selectedKeywords + ')';
     }
     if (!params.searchString) {
       searchString = '(*%3A*)';
     }
     return Ember.$.ajax({
       type: 'GET',
-      url: ENV.APP.serviceURL + '/dblist_databases/select?q=' + searchString + categoryString + '&wt=json&rows=' + rows,
+      url: ENV.APP.serviceURL + '/dblist_databases/select?q=' + searchString + categoryString + keywordString + '&wt=json&rows=' + rows,
       data: {
       },
       dataType: 'jsonp',
