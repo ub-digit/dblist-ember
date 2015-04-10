@@ -46,7 +46,6 @@ export default Ember.Controller.extend({
   }.property('parentKeyword'),
 
   childKeywords: function() {
-    console.log(this.get('parentKeyword'));
     if (this.get('parentKeyword') === null) {
       return [];
     } else {
@@ -70,6 +69,12 @@ export default Ember.Controller.extend({
     },
     setParentKeyword: function(keyword) {
       this.set('parentKeyword', keyword.hash_value);
+    },
+    clearSearch: function() {      
+      this.set('rows', ROW_INCREMENT);
+      this.set('category', null);
+      this.set('selectedKeywords', null);
+      this.set('searchString', null);
     }
   }
 });

@@ -12,7 +12,7 @@ export default Ember.Route.extend({
       keywords: this.callQuery('/dblist_keywords/select?q=(*%3A*)AND(language%3A' + language + ')&wt=json&rows=10000')
     });
   },
-  
+
   callQuery: function(link) {
    return Ember.$.ajax({
     type: 'GET',
@@ -30,6 +30,6 @@ export default Ember.Route.extend({
   },
   function(error) {
     console.log(error);
-  })
+  });
 }
 });
