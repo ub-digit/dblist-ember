@@ -21,7 +21,7 @@
   <div class="col-xs-12">
     <div class="btn-group btn-group-justified" role="group" aria-label="...">
     {{bootstrap-multiselect options=mainSubjects id='keyword-selector' selected=selectedKeywords}}
-      
+
       <div class="btn-group" role="group">
         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
           Ämnesord
@@ -93,8 +93,8 @@
         {{/each}}
         </div>
       </div></div>
-      <div class="row">
-        <div class="col-xs-12 col-sm-6 collapse" {{bind-attr id=db.id}}>
+      <div class="row collapse" {{bind-attr id=db.id}}>
+        <div class="col-xs-12 col-sm-6 additional-info">
           {{#each desc in db.extraDescriptions}}
           <p>{{desc.description}}
           </p>
@@ -123,6 +123,12 @@
             <i class="fa fa-link"></i> {{#link-to 'database' db.libris_id }}Länk till denna post{{/link-to}}
           </p>
         </div>
+        <div class="col-xs-12 col-sm-6 additional-info">
+          <p><strong>Terms of use:</strong><br/>
+            Authorized user Definition: Faculty staff, researchers and students at the University of Gothenburg can use the library card number to get access, to most of the University Library e-resources when off-campus.</p>
+        </div>
+      </div>
+      <div class="row">
         <div class="col-xs-12 more-info">
           <a data-toggle="collapse" {{bind-attr href=db.objectIdentifier}} aria-expanded="false" {{bind-attr aria-controls=db.id}}>Mer om databasen</a>
         </div>

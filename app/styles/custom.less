@@ -1,37 +1,51 @@
+#ember-app-dblist-ember {
+  .database {
+    border-bottom: 1px solid #ccc;
 
-.database {
-  border-bottom: 1px solid #ccc;
-}
+    .more-info {
 
-.more-info {
+    }
 
-}
+    .number-showed {
+      margin-top:30px;
+    }
 
-.number-showed {
-  margin-top:30px;
-}
+    .availability {
+      font-size: 12px;
+      margin-bottom: 5px;
+    }
 
-.availability {
-  font-size: 12px;
-  margin-bottom: 5px;
-}
+    .subjects {
+      line-height:24px;
+      .label-primary {
+  			border-radius: 1em;
+  		}
+  		.label-default {
+  			background-color:#fff;
+  			border: 1px solid;
+  			color:#777;
+  			font-weight:normal;
+  		}
+    }
 
-.subjects {
-  line-height:24px;
-}
+    .additional-info {
+  		font-size:12px;
+  	}
 
-.more-info {
-  a:link, a:visited {
-    text-decoration: none;
-  }
-  a[aria-expanded="true"]::after {
-    content: ' \f077';
-    font-family: FontAwesome;
-    color: #000;
-  }
-  a[aria-expanded="false"]::after {
-    content: ' \f078';
-    font-family: FontAwesome;
-    color: #000;
+    .more-info {
+      a:link, a:visited {
+        text-decoration: none;
+      }
+      a[aria-expanded="true"]::after {
+        content: ' \f077';
+        font-family: FontAwesome;
+        color: #000;
+      }
+      a[aria-expanded="false"]::after {
+        content: ' \f078';
+        font-family: FontAwesome;
+        color: #000;
+      }
+    }
   }
 }
