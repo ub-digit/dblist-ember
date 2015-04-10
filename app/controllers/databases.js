@@ -52,6 +52,14 @@ export default Ember.Controller.extend({
     setCategory: function(category) {
       this.set('rows', ROW_INCREMENT);
       this.set('category', category.hash_value);
+    },
+    clearSearch: function() {      
+
+      this.set('rows', ROW_INCREMENT);
+      this.set('category', null);
+      this.set('selectedKeywords', null);
+      this.set('searchString', null);
+
     }
   }
 });

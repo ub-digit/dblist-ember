@@ -1,12 +1,16 @@
 #ember-app-dblist-ember {
 
   #searchClear {
-    position: absolute;    
+    position: absolute;
     z-index: 1000;
     right: 50px;
     top: 7px;
-    a:link, a:visited {
+    a, a:link, a:visited {
       color:#777;
+      cursor:pointer;
+    }
+    a:hover {
+      color:@brand-primary;
     }
   }
 
