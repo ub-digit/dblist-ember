@@ -12,6 +12,7 @@ export default Ember.Controller.extend({
   resetParams: function() {
     this.set('rows', ROW_INCREMENT);
     this.set('category', null);
+    this.set('selectedKeywords', null);
   }.observes('searchString'),
 
   displayExtraRowsButton: function() {
