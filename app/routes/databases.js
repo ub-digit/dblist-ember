@@ -19,8 +19,9 @@ export default Ember.Route.extend({
     var rows = params.rows;
     var searchString = '((title%3A*' + params.searchString + '*)OR(libris_id%3A' + params.searchString + '))';
     var categoryString = '';
+    //console.log(this.controllerFor('databases'));
     if (params.category) {
-      categoryString = 'AND(categories%3A' + params.category + ')'
+      categoryString = 'AND(categories%3A' + params.category + ')';
     }
     if (!params.searchString) {
       searchString = '(*%3A*)';

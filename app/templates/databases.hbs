@@ -20,7 +20,7 @@
 <div class="row">
   <div class="col-xs-12">
     <div class="btn-group btn-group-justified" role="group" aria-label="...">
-    {{bootstrap-multiselect options=mainSubjects}}
+    {{bootstrap-multiselect options=mainSubjects id='keyword-selector' selected=selectedKeywords}}
       
       <div class="btn-group" role="group">
         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
@@ -117,7 +117,7 @@
             {{#if db.categories}}
             <strong>Materialtyp: </strong>
             {{#each category in db.categories}}
-            {{category-item categoryId=category}}
+            {{category-item categoryId=category categories=categories}}
             {{/each}}
             {{/if}}
           </p>

@@ -3,14 +3,15 @@ var ROW_INCREMENT = 10;
 
 export default Ember.Controller.extend({
   needs: ['application'],
-  queryParams: ['rows', 'searchString', 'category'],
+  queryParams: ['rows', 'searchString', 'category', 'selectedKeywords'],
   rows: ROW_INCREMENT,
   searchString: null,
   category: null,
+  selectedKeywords: null,
 
   resetParams: function() {
     this.set('rows', ROW_INCREMENT);
-    this.set('selectedCategory', null);
+    this.set('category', null);
   }.observes('searchString'),
 
   displayExtraRowsButton: function() {
@@ -24,22 +25,22 @@ export default Ember.Controller.extend({
     return this.get('model.numFound') - this.get('model.databases.length')
   }.property('model.databases', 'model.numFound'),
 
-  categories: function() {
-    return this.get('controllers.application.model.categories');
-  }.property('controllers.application.model.categories'),
+  categoriesBinding: 'controllers.application.model.categories',
 
-  updateCategorySearchId: function() {
-    this.set('category', this.get('selectedCategory.id'));
-  }.observes('selectedCategory'),
+  selectedCategory: function() {
+    var category = this.get('categories').findBy('hash_value', this.get('category'));
+    console.log('cat', category, this.get('categories'), this.get('category'));
+    return category;
+  }.property('category'),
 
   mainSubjects: function() {
     return [
     {value: "1", label: "Humaniora"},
     {value: "21", label: "Konstiga amnen"},
     {value: "3", label: "Sportkunskap"},
-    {value: "4", label: "Vinkelvoltar 101"},
+    {value: "4", label: "Vinkelvoltar 101", selected: "true"},
     ];
-  }.property('controllers.application.model.categories'),
+  }.property('categories'),
 
   actions: {
     increaseRows: function() {
@@ -49,7 +50,7 @@ export default Ember.Controller.extend({
     },
     setCategory: function(category) {
       this.set('rows', ROW_INCREMENT);
-      this.set('selectedCategory', category);
+      this.set('category', category.hash_value);
     }
   }
 });
