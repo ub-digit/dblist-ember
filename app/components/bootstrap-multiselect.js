@@ -36,5 +36,8 @@ export default Ember.Component.extend({
       that.$().multiselect('destroy');
       that.rerender();
     }
+  },
+  checkForUpdate: function() {
+    Ember.run.once(this, 'updateMultiselect');
   }.observes('selected', 'parentKeyword')
 });

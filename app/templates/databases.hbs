@@ -36,7 +36,7 @@
         </button>
         <ul class="dropdown-menu" role="menu">
           {{#each keyword in parentKeywords}}
-          <li><a href="" {{action 'setParentKeyword' keyword}}>{{keyword.keyword}}</a></li>
+          <li><a href="" {{action 'setParentKeyword' keyword}}>{{keyword.keyword}} ({{keyword.facetCount}})</a></li>
           {{/each}}
         </ul>
       </div>
@@ -51,8 +51,8 @@
           <span class="caret"></span>
         </button>
         <ul class="dropdown-menu" role="menu">
-          {{#each category in categories}}
-          <li><a href="" {{action 'setCategory' category}}>{{category.category}}</a></li>
+          {{#each category in categoriesList}}
+          <li><a href="" {{action 'setCategory' category}}>{{category.category}} ({{category.facetCount}})</a></li>
           {{/each}}
         </ul>
       </div>
@@ -65,7 +65,7 @@
 <div class="row">
   <div class="col-xs-12 number-showed">
     <div class="text-center">
-      <strong>Visar {{model.databases.length}} av {{model.numFound}} databaser</strong>
+      <strong>Visar {{model.databases.length}} av {{model.response.numFound}} databaser</strong>
     </div>
   </div>
 </div>
