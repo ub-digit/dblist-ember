@@ -9,7 +9,6 @@ export default Ember.Controller.extend({
   category: null,
   selectedKeywords: null,
   parentKeyword: null,
-  language: 'sv',
 
   resetParams: function() {
     this.set('rows', ROW_INCREMENT);
@@ -19,7 +18,7 @@ export default Ember.Controller.extend({
   }.observes('searchString'),
 
   displayExtraRowsButton: function() {
-    if (this.get('model.databases.length') === this.get('model.numFound')) {
+    if (this.get('model.databases.length') === this.get('model.response.numFound')) {
       return false;
     }
     return true;
@@ -31,6 +30,7 @@ export default Ember.Controller.extend({
 
   categoriesBinding: 'controllers.application.model.categories',
   keywordsBinding: 'controllers.application.model.keywords',
+  languageBinding: 'controllers.application.model.externalParams.lang',
 
   parentKeywords: Ember.computed('keywords', 'model', function(){
     var that = this;

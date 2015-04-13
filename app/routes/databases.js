@@ -18,6 +18,9 @@ export default Ember.Route.extend({
     },
     selectedKeywords: {
       refreshModel: true
+    },
+    language: {
+      refreshModel: true
     }
   },
   model: function(params) {

@@ -13,6 +13,15 @@ export default Ember.Route.extend({
     });
   },
 
+  setupController: function(controller, model){
+    controller.set('model', model);
+    var rootElement = Ember.$(ENV.APP.rootElement);
+    controller.set('model.externalParams', rootElement.data());
+    if (!controller.get('model.externalParams.lang')) {
+      controller.set('model.externalParams.lang', 'sv');
+    }
+  },
+
   callQuery: function(link) {
    return Ember.$.ajax({
     type: 'GET',
