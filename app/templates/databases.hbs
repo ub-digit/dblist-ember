@@ -36,7 +36,7 @@
         </button>
         <ul class="dropdown-menu" role="menu">
           {{#each keyword in parentKeywords}}
-          <li><a href="" {{action 'setParentKeyword' keyword}}>{{keyword.keyword}} ({{keyword.facetCount}})</a></li>
+          <li><a href="" {{action 'setParentKeyword' keyword}}>{{keyword.keyword}} {{#if keyword.facetCount}}({{keyword.facetCount}}){{/if}}</a></li>
           {{/each}}
         </ul>
       </div>
@@ -52,7 +52,7 @@
         </button>
         <ul class="dropdown-menu" role="menu">
           {{#each category in categoriesList}}
-          <li><a href="" {{action 'setCategory' category}}>{{category.category}} ({{category.facetCount}})</a></li>
+          <li><a href="" {{action 'setCategory' category}}>{{category.category}} {{#if category.facetCount}}({{category.facetCount}}){{/if}}</a></li>
           {{/each}}
         </ul>
       </div>

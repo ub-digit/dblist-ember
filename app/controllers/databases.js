@@ -35,17 +35,29 @@ export default Ember.Controller.extend({
   parentKeywords: Ember.computed('keywords', 'model', function(){
     var that = this;
     var keywords = this.get('keywords').filterBy('parent_id', undefined);
+
+    // Add facet count unless parentKeyword is selected
     keywords.forEach(function(entry){
+      if (!that.get('parentKeyword')) {
       entry.set('facetCount', that.get('model').facetCount('keywords_' + that.language, entry.hash_value));
+      } else {
+        entry.set('facetCount', null); 
+      }
     });
     return keywords;
   }),
 
-  categoriesList: Ember.computed('categories', 'model', function(){
+  categoriesList: Ember.computed('categories', 'model', 'category', function(){
     var that = this;
     var categories = this.get('categories');
+    
+    // Add facet count unless category is selected
     categories.forEach(function(entry){
-      entry.set('facetCount', that.get('model').facetCount('categories_' + that.language, entry.hash_value));
+      if (!that.get('category')) {
+        entry.set('facetCount', that.get('model').facetCount('categories_' + that.language, entry.hash_value)); 
+      } else {
+        entry.set('facetCount', null); 
+      }
     });
     return categories;
   }),

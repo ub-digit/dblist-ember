@@ -28,7 +28,7 @@ export default Ember.Route.extend({
     var categoryString = '';
     var keywordString = '';
     var facetString = '&facet=true&facet.field=categories_' + language + '&facet.field=keywords_' + language
-    //console.log(this.controllerFor('databases'));
+
     if (params.category) {
       categoryString = 'AND(categories_' + language + '%3A' + params.category + ')';
     }
@@ -36,7 +36,6 @@ export default Ember.Route.extend({
       keywordString = 'AND(keywords_' + language + '%3A' + params.parentKeyword + ')';
     }
     if (params.selectedKeywords) {
-      console.log(params.selectedKeywords);
       var list = Ember.A(params.selectedKeywords.split(':'));
       keywordString += 'AND(';
       var keywordsCount = list.length;
@@ -49,7 +48,6 @@ export default Ember.Route.extend({
         }
       })
       keywordString += ')'
-      //keywordString += 'AND(keywords_' + language + '%3A' + params.selectedKeywords + ')';
     }
     if (!params.searchString) {
       searchString = '(*%3A*)';
