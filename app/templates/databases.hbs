@@ -14,6 +14,16 @@
   </div>
 </div>
 
+<!-- Number of databases -->
+<div class="row">
+  <div class="col-xs-12 number-showed">
+    <div class="text-center">
+      <strong>Visar {{model.databases.length}} av {{model.response.numFound}} databaser</strong>
+    </div>
+  </div>
+</div>
+<!-- /number of databases -->
+
 <!-- filters -->
 <div class="row">
   <div class="col-xs-12">
@@ -61,25 +71,14 @@
 </div>
 <!-- /filters -->
 
-<!-- Number of databases -->
-<div class="row">
-  <div class="col-xs-12 number-showed">
-    <div class="text-center">
-      <strong>Visar {{model.databases.length}} av {{model.response.numFound}} databaser</strong>
-    </div>
-  </div>
-</div>
-<!-- /number of databases -->
+
 
 <ul class="list-unstyled">
   {{#each db in model.databases}}
   <li class="database">
     <div class="row">
       <div class="col-xs-12">
-        <h2><a href="javascript:void();">{{db.title}}</a></h2>
-        {{#each url in db.urls}}
-        {{url.url}}
-        {{/each}}
+        <h2><a {{bind-attr href=db.url.url}} target="_blank">{{db.title}}</a></h2>
       </div>
       <div class="col-sm-6">
         <p>{{db.descriptions.firstObject.description}}
@@ -92,7 +91,11 @@
       </div>
       <div class="col-sm-6">
         <div class="availability">
+        {{#if db.isLocked}}
           <i class="fa fa-lock"></i> Tillgänglig för Göteborgs universitet
+        {{else}}
+          <i class="fa fa-unlock"></i> Fri elektronisk resurs
+        {{/if}}
         </div>
         {{#if isSwedish}}
         {{keyword-list keywords=keywords dbKeywords=db.keywords_sv}}
@@ -134,6 +137,14 @@
                 {{/each}}
               {{/if}}
             {{/if}}
+          </p>
+          <p>
+          {{#if db.extraUrls}}
+            {{#each url in db.extraUrls}}
+              <strong>Alternativ länk: </strong>
+              <a {{bind-attr href=url.url}} target="_blank">{{url.url}}</a><br/>
+            {{/each}}
+          {{/if}}
           </p>
           <p>
             <i class="fa fa-link"></i> {{#link-to 'database' db.libris_id }}Länk till denna post{{/link-to}}
