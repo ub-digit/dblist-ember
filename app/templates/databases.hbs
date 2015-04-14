@@ -17,7 +17,7 @@
 <!-- filters -->
 <div class="row">
   <div class="col-xs-12">
-    <h4>S&ouml;k</h4>
+    <h4>{{t 'search.filterTitle'}}</h4>
   </div>
 </div>
 <div class="row">
@@ -76,7 +76,10 @@
   <li class="database">
     <div class="row">
       <div class="col-xs-12">
-        <h2><a href="#">{{db.title}}</a></h2>
+        <h2><a href="javascript:void();">{{db.title}}</a></h2>
+        {{#each url in db.urls}}
+        {{db.url.url}}
+        {{/each}}
       </div>
       <div class="col-sm-6">
         <p>{{db.descriptions.firstObject.description}}

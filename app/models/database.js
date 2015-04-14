@@ -1,8 +1,13 @@
 import Ember from 'ember';
+import ENV from 'dblist-ember/config/environment';
+
 export default Ember.Object.extend({
-  //init: function() {
-  //  console.log("db-init", this.controllerFor('application'));
-  //},
+
+  // Fetches Url items for Database-record
+  getUrls: function(){
+    //this.callQuery('urls', '/dblist_urls/select?q=db_id%3A' + this.get('id') + '&wt=json&rows=10000');
+    //console.log(this.get('urls'));
+  }.on("init"),
 
   // Returns any additional descriptions as array
   extraDescriptions: function() {
@@ -18,20 +23,27 @@ export default Ember.Object.extend({
     return '#' + this.get('id');
   }.property('id'),
 
-  //keywords: Ember.computed('keywords_sv', 'keywords_en', function(){
-    //console.log("fdjjfdfdskfds", this.locale, this);
-    //var application = this.container.lookup('application:main');
-    //var language = application.get('locale');
-    //var keywords = this.get('keywords_' + language);
-    //return keywords;
-  //}),
-/*
-  categories: Ember.computed('categories_sv', 'categories_en', function(){
-    console.log(Ember.I18n.locale);
-    var application = this.container.lookup('application:main');
-    var language = application.get('locale');
-    var language = 'sv';
-    return this.get('categories_' + language);
-  })
-*/
+  callQuery: function(field, link) {
+    var that = this;
+    Ember.$.ajax({
+      type: 'GET',
+      url: ENV.APP.serviceURL + link,
+      data: {
+      },
+      dataType: 'jsonp',
+      jsonp: 'json.wrf',
+      contentType: "application/json; charset=utf-8"
+    }).then(function(response) {
+      var list = Ember.A([]);
+      console.log(response);
+      response.response.docs.forEach(function(entry) {
+        list.pushObject(Ember.Object.create(entry));
+      });
+      that.set(field, list);
+    },
+    function(error) {
+      console.log(error);
+    });
+  }
+
 });

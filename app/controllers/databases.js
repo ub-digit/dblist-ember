@@ -42,11 +42,11 @@ export default Ember.Controller.extend({
 
     // Add facet count unless parentKeyword is selected
     keywords.forEach(function(entry){
-      if (!that.get('parentKeyword')) {
+      //if (!that.get('parentKeyword')) {
       entry.set('facetCount', that.get('model').facetCount('keywords_' + that.get('language'), entry.hash_value));
-      } else {
-        entry.set('facetCount', null); 
-      }
+      //} else {
+      //  entry.set('facetCount', null); 
+      //}
     });
     return keywords;
   }),
@@ -57,11 +57,11 @@ export default Ember.Controller.extend({
     
     // Add facet count unless category is selected
     categories.forEach(function(entry){
-      if (!that.get('category')) {
+      //if (!that.get('category')) {
         entry.set('facetCount', that.get('model').facetCount('categories_' + that.get('language'), entry.hash_value)); 
-      } else {
-        entry.set('facetCount', null); 
-      }
+      //} else {
+      //  entry.set('facetCount', null); 
+      //}
     });
     return categories;
   }),
