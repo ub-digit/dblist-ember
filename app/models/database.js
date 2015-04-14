@@ -8,9 +8,23 @@ export default Ember.Object.extend({
     var that = this;
     var urls = this.callQuery('/dblist_urls/select?q=db_id%3A' + this.get('id') + '&wt=json&rows=10000').then(
       function(urls){
-        that.set('urls', urls);
+        // Store url value as url
+        if (urls.length > 0) {
+          that.set('url', urls.objectAt(0));
+        }
+        if (urls.length > 1) {
+          console.log('extra URL', urls.slice(1));
+          that.set('extraUrls', urls.slice(1));
+        }
       });
   }.on("init"),
+
+  // Returns true if main URL has reference to ezproxy
+  isLocked: Ember.computed('url', function(){
+    if (this.get('url')) {
+      return ~this.get('url').url.indexOf('ezproxy.ub.gu.se');
+    }
+  }),
 
   // Returns any additional descriptions as array
   extraDescriptions: function() {
@@ -40,7 +54,7 @@ export default Ember.Object.extend({
       var list = Ember.A([]);
       console.log(response);
       response.response.docs.forEach(function(entry) {
-        list.pushObject(Ember.Object.create(entry));
+        list.pushObject(entry);
       });
 
       return list;
