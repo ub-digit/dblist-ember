@@ -18,6 +18,22 @@ export default Ember.Object.extend({
       });
   }.on("init"),
 
+  // Fetches Url items for Database-record
+  getDescriptions: function(){
+    var that = this;
+    var urls = this.callQuery('/dblist_descriptions/select?q=db_id%3A' + this.get('id') + '&wt=json&rows=10000').then(
+      function(descriptions){
+        that.set('descriptions', descriptions)
+        // Store url value as url
+        if (urls.length > 0) {
+          that.set('url', urls.objectAt(0));
+        }
+        if (urls.length > 1) {
+          that.set('extraUrls', urls.slice(1));
+        }
+      });
+  }.on("init"),
+
   // Returns true if main URL has reference to ezproxy
   isLocked: Ember.computed('url', function(){
     if (this.get('url') && this.get('url').url.indexOf('ezproxy.ub.gu.se') !== -1) {

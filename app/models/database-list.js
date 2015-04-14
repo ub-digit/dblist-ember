@@ -6,7 +6,7 @@ export default Ember.Object.extend({
     var databases = Ember.A([]);
 
     this.get('response.docs').forEach(function(entry) {
-      entry.descriptions = that.get('applicationModel.descriptions').filterBy('db_id', entry.id);
+      //entry.descriptions = that.get('applicationModel.descriptions').filterBy('db_id', entry.id);
       databases.pushObject(Database.create(entry));
     });
 
