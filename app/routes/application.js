@@ -28,7 +28,8 @@ export default Ember.Route.extend({
     data: {
     },
     dataType: 'jsonp',
-    jsonp: 'json.wrf'
+    jsonp: 'json.wrf',
+    contentType: "application/javascript"
   }).then(function(response) {
     var list = Ember.A([]);
     response.response.docs.forEach(function(entry) {

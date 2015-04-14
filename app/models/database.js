@@ -5,8 +5,11 @@ export default Ember.Object.extend({
 
   // Fetches Url items for Database-record
   getUrls: function(){
-    //this.callQuery('urls', '/dblist_urls/select?q=db_id%3A' + this.get('id') + '&wt=json&rows=10000');
-    //console.log(this.get('urls'));
+    var that = this;
+    var urls = this.callQuery('/dblist_urls/select?q=db_id%3A' + this.get('id') + '&wt=json&rows=10000').then(
+      function(urls){
+        that.set('urls', urls);
+      });
   }.on("init"),
 
   // Returns any additional descriptions as array
@@ -23,23 +26,24 @@ export default Ember.Object.extend({
     return '#' + this.get('id');
   }.property('id'),
 
-  callQuery: function(field, link) {
+  callQuery: function(link) {
     var that = this;
-    Ember.$.ajax({
+    return Ember.$.ajax({
       type: 'GET',
       url: ENV.APP.serviceURL + link,
       data: {
       },
       dataType: 'jsonp',
       jsonp: 'json.wrf',
-      contentType: "application/json; charset=utf-8"
+      contentType: "application/javascript; charset=utf-8"
     }).then(function(response) {
       var list = Ember.A([]);
       console.log(response);
       response.response.docs.forEach(function(entry) {
         list.pushObject(Ember.Object.create(entry));
       });
-      that.set(field, list);
+
+      return list;
     },
     function(error) {
       console.log(error);
