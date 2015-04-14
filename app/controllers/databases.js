@@ -45,7 +45,7 @@ export default Ember.Controller.extend({
       //if (!that.get('parentKeyword')) {
       entry.set('facetCount', that.get('model').facetCount('keywords_' + that.get('language'), entry.hash_value));
       //} else {
-      //  entry.set('facetCount', null); 
+      //  entry.set('facetCount', null);
       //}
     });
     return keywords;
@@ -54,13 +54,13 @@ export default Ember.Controller.extend({
   categoriesList: Ember.computed('categories', 'model', 'category', function(){
     var that = this;
     var categories = this.get('categories');
-    
+
     // Add facet count unless category is selected
     categories.forEach(function(entry){
       //if (!that.get('category')) {
-        entry.set('facetCount', that.get('model').facetCount('categories_' + that.get('language'), entry.hash_value)); 
+        entry.set('facetCount', that.get('model').facetCount('categories_' + that.get('language'), entry.hash_value));
       //} else {
-      //  entry.set('facetCount', null); 
+      //  entry.set('facetCount', null);
       //}
     });
     return categories;
@@ -106,12 +106,19 @@ export default Ember.Controller.extend({
       this.set('selectedKeywords', null);
       this.set('rows', ROW_INCREMENT);
     },
-    clearSearch: function() {      
+    clearSearch: function() {
       this.set('rows', ROW_INCREMENT);
       this.set('category', null);
       this.set('selectedKeywords', null);
       this.set('parentKeyword', null);
       this.set('searchString', null);
+    },
+    clearParentKeyword: function() {
+      this.set('selectedKeywords', null);
+      this.set('parentKeyword', null);
+    },
+    clearCategory: function() {
+      this.set('category', null);
     }
   }
 });

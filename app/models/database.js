@@ -18,21 +18,9 @@ export default Ember.Object.extend({
       });
   }.on("init"),
 
-  // Fetches Url items for Database-record
-  getDescriptions: function(){
-    var that = this;
-    var urls = this.callQuery('/dblist_descriptions/select?q=db_id%3A' + this.get('id') + '&wt=json&rows=10000').then(
-      function(descriptions){
-        that.set('descriptions', descriptions)
-        // Store url value as url
-        if (urls.length > 0) {
-          that.set('url', urls.objectAt(0));
-        }
-        if (urls.length > 1) {
-          that.set('extraUrls', urls.slice(1));
-        }
-      });
-  }.on("init"),
+  description: Ember.computed('descriptions', function(){
+    return this.get('descriptions')[0];
+  }),
 
   // Returns true if main URL has reference to ezproxy
   isLocked: Ember.computed('url', function(){
@@ -44,11 +32,7 @@ export default Ember.Object.extend({
 
   // Returns any additional descriptions as array
   extraDescriptions: function() {
-    if (this.get('descriptions').length > 1) {
-      return this.get('descriptions').slice(1);
-    } else {
-      return [];
-    }
+    return this.get('descriptions').slice(1);
   }.property('descriptions'),
 
   // Used for bootstrap logic
@@ -68,7 +52,6 @@ export default Ember.Object.extend({
       contentType: "application/javascript; charset=utf-8"
     }).then(function(response) {
       var list = Ember.A([]);
-      console.log(response);
       response.response.docs.forEach(function(entry) {
         list.pushObject(entry);
       });

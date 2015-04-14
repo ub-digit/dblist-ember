@@ -72,7 +72,6 @@ export default Ember.Route.extend({
   },
 
   setupController: function(controller, model) {
-    model.applicationModel = controller.get('controllers.application.model');
     var databaseList = DatabaseList.create(model);
     controller.set('model', databaseList);
   }

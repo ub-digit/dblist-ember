@@ -13,7 +13,7 @@ export default Ember.Component.extend({
       nonSelectedText: Ember.I18n.t('keywords.noneSelected'),
       nSelectedText: Ember.I18n.t('keywords.nSelected'),
       allSelectedText: Ember.I18n.t('keywords.allSelected'),
-      
+
       onChange:function(element) {
         var items = that.$('option:selected');
         var selected = [];
@@ -28,13 +28,27 @@ export default Ember.Component.extend({
       if (that.get('selected')){
         var selectedArray = that.get('selected').split(':');
         that.$().multiselect('select', selectedArray);
+        that.toggleSelected();
+
       }
     });
+  },
+
+  toggleSelected: function() {
+    var button = this.$().next().find('button');
+    if (!this.get('selected')) {
+      button.removeClass('btn-primary');
+      button.addClass('btn-default');
+    } else {
+      button.removeClass('btn-default');
+      button.addClass('btn-primary');
+    }
   },
 
   // Reloads component if string is null
   updateMultiselect: function() {
     var that = this;
+    this.toggleSelected();
     if (this.get('selected') === null) {
       that.$().multiselect('destroy');
       that.rerender();
