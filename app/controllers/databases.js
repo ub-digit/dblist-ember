@@ -9,7 +9,7 @@ export default Ember.Controller.extend({
   category: null,
   selectedKeywords: null,
   parentKeyword: null,
-
+  
   resetParams: function() {
     this.set('rows', ROW_INCREMENT);
     this.set('category', null);

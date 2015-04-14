@@ -13,7 +13,6 @@ export default Ember.Object.extend({
           that.set('url', urls.objectAt(0));
         }
         if (urls.length > 1) {
-          console.log('extra URL', urls.slice(1));
           that.set('extraUrls', urls.slice(1));
         }
       });
@@ -21,9 +20,10 @@ export default Ember.Object.extend({
 
   // Returns true if main URL has reference to ezproxy
   isLocked: Ember.computed('url', function(){
-    if (this.get('url')) {
-      return ~this.get('url').url.indexOf('ezproxy.ub.gu.se');
+    if (this.get('url') && this.get('url').url.indexOf('ezproxy.ub.gu.se') !== -1) {
+      return true;
     }
+    return false;
   }),
 
   // Returns any additional descriptions as array

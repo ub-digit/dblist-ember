@@ -10,7 +10,10 @@ export default Ember.Component.extend({
     var that = this;
     this.$().multiselect({
       disableIfEmpty: true,
-      nonSelectedText: 'Aemnesord',
+      nonSelectedText: Ember.I18n.t('keywords.noneSelected'),
+      nSelectedText: Ember.I18n.t('keywords.nSelected'),
+      allSelectedText: Ember.I18n.t('keywords.allSelected'),
+      
       onChange:function(element) {
         var items = that.$('option:selected');
         var selected = [];

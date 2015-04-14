@@ -3,7 +3,7 @@
 <div class="row">
   <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
     <div class="input-group">
-      {{input value=searchString class="form-control" placeholder="Search Databas" aria-describedby="basic-addon2"}}
+      {{input value=searchString class="form-control" placeholderTranslation="search.placeholder" aria-describedby="basic-addon2"}}
       <span id="searchClear">
         <a {{action 'clearSearch'}}><i class="fa fa-times"></i></a>
       </span>
@@ -18,7 +18,7 @@
 <div class="row">
   <div class="col-xs-12 number-showed">
     <div class="text-center">
-      <strong>Visar {{model.databases.length}} av {{model.response.numFound}} databaser</strong>
+      <strong>{{t 'search.resultString.displays'}} {{model.databases.length}} {{t 'search.resultString.of'}} {{model.response.numFound}} {{t 'search.resultString.hits'}}</strong>
     </div>
   </div>
 </div>
@@ -33,14 +33,12 @@
 <div class="row">
   <div class="col-xs-12">
     <div class="btn-group btn-group-justified" role="group" aria-label="...">
-
-
       <div class="btn-group" role="group">
         <button type="button" {{bind-attr class=":btn :dropdown-toggle selectedParentKeyword:btn-primary:btn-default"}} data-toggle="dropdown" aria-expanded="false">
           {{#if selectedParentKeyword}}
-          {{selectedParentKeyword.keyword}}
+            {{selectedParentKeyword.keyword}}
           {{else}}
-          Huvudaemne
+           {{t 'keywords.parentKeyword'}}
           {{/if}}
           <span class="caret"></span>
         </button>
@@ -56,7 +54,7 @@
           {{#if selectedCategory}}
           {{selectedCategory.category}}
           {{else}}
-          Materialtyp
+          {{t 'categories.category'}}
           {{/if}}
           <span class="caret"></span>
         </button>
@@ -90,9 +88,9 @@
       <div class="col-sm-6">
         <div class="availability">
         {{#if db.isLocked}}
-          <i class="fa fa-lock"></i> Tillgänglig för Göteborgs universitet
+          <i class="fa fa-lock"></i> {{t 'database.locked'}}
         {{else}}
-          <i class="fa fa-unlock"></i> Fri elektronisk resurs
+          <i class="fa fa-unlock"></i> {{t 'database.free'}}
         {{/if}}
         </div>
         {{#if isSwedish}}
@@ -115,21 +113,21 @@
 
           <p>
             {{#each at in db.alternate_titles}}
-            <strong>Alternativ titel: </strong>{{at}}<br/>
+            <strong>{{t 'database.alternativeTitle'}}: </strong>{{at}}<br/>
             {{/each}}
             {{#each publisher in db.publishers}}
-            <strong>Leverantör: </strong>{{publisher}}<br/>
+            <strong>{{t 'database.publisher'}}: </strong>{{publisher}}<br/>
             {{/each}}
             {{#if isSwedish}}
               {{#if db.categories_sv}}
-                <strong>Materialtyp: </strong>
+                <strong>{{t 'categories.category'}}: </strong>
                 {{#each category in db.categories_sv}}
                   {{category-item categoryId=category categories=categories}}
                 {{/each}}
               {{/if}}
             {{else}}
               {{#if db.categories_en}}
-                <strong>Materialtyp: </strong>
+                <strong>{{t 'categories.category'}}: </strong>
                 {{#each category in db.categories_en}}
                   {{category-item categoryId=category categories=categories}}
                 {{/each}}
@@ -139,23 +137,23 @@
           <p>
           {{#if db.extraUrls}}
             {{#each url in db.extraUrls}}
-              <strong>Alternativ länk: </strong>
+              <strong>{{t 'database.alternativeURL'}}: </strong>
               <a {{bind-attr href=url.url}} target="_blank">{{url.url}}</a><br/>
             {{/each}}
           {{/if}}
           </p>
           <p>
-            <i class="fa fa-link"></i> {{#link-to 'database' db.libris_id }}Länk till denna post{{/link-to}}
+            <i class="fa fa-link"></i> {{#link-to 'database' db.libris_id }}{{t 'database.link'}}{{/link-to}}
           </p>
         </div>
         <div class="col-xs-12 col-sm-6 additional-info">
-          <p><strong>Terms of use:</strong><br/>
+          <p><strong>{{t 'database.termsOfUse'}}:</strong><br/>
             Authorized user Definition: Faculty staff, researchers and students at the University of Gothenburg can use the library card number to get access, to most of the University Library e-resources when off-campus.</p>
         </div>
       </div>
       <div class="row">
         <div class="col-xs-12 more-info">
-          <a data-toggle="collapse" {{bind-attr href=db.objectIdentifier}} aria-expanded="false" {{bind-attr aria-controls=db.id}}>Mer om databasen</a>
+          <a data-toggle="collapse" {{bind-attr href=db.objectIdentifier}} aria-expanded="false" {{bind-attr aria-controls=db.id}}>{{t 'database.expandPost'}}</a>
         </div>
       </div>
     </li>
@@ -165,7 +163,7 @@
   {{#if displayExtraRowsButton}}
   <div class="row">
     <div class="col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
-      <button class="btn btn-default btn-block" {{action 'increaseRows'}}>Visa fler ({{rowsToGo}})</button>
+      <button class="btn btn-default btn-block" {{action 'increaseRows'}}>{{t 'database.showMoreRows'}} ({{rowsToGo}})</button>
     </div>
   </div>
   {{/if}}
