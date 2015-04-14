@@ -1,8 +1,7 @@
 export default {
     other_lang: 'en',
     main: {
-      title: "Databaslistan",
-      description: "Databaslistan - Göteborgs Universitetsbibliotek"
+      title: "Databaser"
     },
     search: {
       placeholder: "Skriv vad du letar efter, tex PubMed",

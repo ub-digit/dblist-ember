@@ -1,8 +1,7 @@
 export default {
     other_lang: 'en',
     main: {
-      title: "Database list",
-      description: "The Database list - Gothenburg University Library"
+      title: "Databases"
     },
     search: {
       placeholder: "Write what you are looking for, i.e. PubMed",
