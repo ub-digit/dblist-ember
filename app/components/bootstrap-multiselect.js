@@ -10,6 +10,11 @@ export default Ember.Component.extend({
     var that = this;
     this.$().multiselect({
       disableIfEmpty: true,
+/*
+      templates: {
+        button: '<button id="qwerty" type="button" class="multiselect dropdown-toggle btn btn-default" data-toggle="dropdown"><span class="multiselect-selected-text"></span> <b class="caret"></b></button>'
+      },
+*/
       nonSelectedText: 'Aemnesord',
       onChange:function(element) {
         var items = that.$('option:selected');
@@ -25,6 +30,8 @@ export default Ember.Component.extend({
       if (that.get('selected')){
         var selectedArray = that.get('selected').split(':');
         that.$().multiselect('select', selectedArray);
+        that.updateMultiselect();
+
       }
     });
   },
@@ -32,6 +39,14 @@ export default Ember.Component.extend({
   // Reloads component if string is null
   updateMultiselect: function() {
     var that = this;
+    var button = that.$().next().find('button');
+    if (!that.get('selected')) {
+      button.removeClass('btn-primary');
+      button.addClass('btn-default');
+    } else {
+      button.removeClass('btn-default');
+      button.addClass('btn-primary');
+    }
     if (this.get('selected') === null) {
       that.$().multiselect('destroy');
       that.rerender();
