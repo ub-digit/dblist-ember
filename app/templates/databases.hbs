@@ -43,6 +43,9 @@
           Huvudaemne
           {{/if}}
           <span class="caret"></span>
+          {{#if parentKeyword}}
+            <div class="clear-menu" {{action "clearParentKeyword" bubbles=false}}><i class="fa fa-times"></i></div>
+          {{/if}}
         </button>
         <ul class="dropdown-menu" role="menu">
           {{#each keyword in parentKeywords}}
@@ -59,6 +62,9 @@
           Materialtyp
           {{/if}}
           <span class="caret"></span>
+          {{#if category}}
+            <div class="clear-menu" {{action "clearCategory" bubbles=false}}><i class="fa fa-times"></i></div>
+          {{/if}}
         </button>
         <ul class="dropdown-menu" role="menu">
           {{#each category in categoriesList}}
