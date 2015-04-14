@@ -17,6 +17,10 @@ export default Ember.Controller.extend({
     this.set('parentKeyword', null);
   }.observes('searchString'),
 
+  isSwedish: Ember.computed('language', function(){
+    return this.get('language') === 'sv';
+  }),
+
   displayExtraRowsButton: function() {
     if (this.get('model.databases.length') === this.get('model.response.numFound')) {
       return false;
@@ -30,7 +34,7 @@ export default Ember.Controller.extend({
 
   categoriesBinding: 'controllers.application.model.categories',
   keywordsBinding: 'controllers.application.model.keywords',
-  languageBinding: 'controllers.application.model.externalParams.lang',
+  languageBinding: 'controllers.application.model.language',
 
   parentKeywords: Ember.computed('keywords', 'model', function(){
     var that = this;
@@ -39,7 +43,7 @@ export default Ember.Controller.extend({
     // Add facet count unless parentKeyword is selected
     keywords.forEach(function(entry){
       if (!that.get('parentKeyword')) {
-      entry.set('facetCount', that.get('model').facetCount('keywords_' + that.language, entry.hash_value));
+      entry.set('facetCount', that.get('model').facetCount('keywords_' + that.get('language'), entry.hash_value));
       } else {
         entry.set('facetCount', null); 
       }
@@ -54,7 +58,7 @@ export default Ember.Controller.extend({
     // Add facet count unless category is selected
     categories.forEach(function(entry){
       if (!that.get('category')) {
-        entry.set('facetCount', that.get('model').facetCount('categories_' + that.language, entry.hash_value)); 
+        entry.set('facetCount', that.get('model').facetCount('categories_' + that.get('language'), entry.hash_value)); 
       } else {
         entry.set('facetCount', null); 
       }

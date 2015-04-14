@@ -25,7 +25,9 @@ export default Ember.Route.extend({
   },
   model: function(params) {
     var that = this;
-    var language = 'sv';
+    var application = this.container.lookup('application:main');
+    console.log(application.get('locale'));
+    var language = application.get('locale');
     var rows = params.rows;
     var searchString = '((title%3A*' + params.searchString + '*)OR(libris_id%3A' + params.searchString + '))';
     var categoryString = '';

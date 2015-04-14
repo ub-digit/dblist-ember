@@ -17,7 +17,7 @@
 <!-- filters -->
 <div class="row">
   <div class="col-xs-12">
-    <h4>Filtrera din sökning</h4>
+    <h4>S&ouml;k</h4>
   </div>
 </div>
 <div class="row">
@@ -91,12 +91,11 @@
         <div class="availability">
           <i class="fa fa-lock"></i> Tillgänglig för Göteborgs universitet
         </div>
+        {{#if isSwedish}}
         {{keyword-list keywords=keywords dbKeywords=db.keywords_sv}}
-        <div class="subjects">
-        {{#each keyword in db.parentKeywords}}
-          {{keyword}}
-        {{/each}}
-        </div>
+        {{else}}
+        {{keyword-list keywords=keywords dbKeywords=db.keywords_en}}
+        {{/if}}
       </div></div>
       <div class="row collapse" {{bind-attr id=db.id}}>
         <div class="col-xs-12 col-sm-6 additional-info">
@@ -117,11 +116,20 @@
             {{#each publisher in db.publishers}}
             <strong>Leverantör: </strong>{{publisher}}<br/>
             {{/each}}
-            {{#if db.categories_sv}}
-            <strong>Materialtyp: </strong>
-            {{#each category in db.categories_sv}}
-            {{category-item categoryId=category categories=categories}}
-            {{/each}}
+            {{#if isSwedish}}
+              {{#if db.categories_sv}}
+                <strong>Materialtyp: </strong>
+                {{#each category in db.categories_sv}}
+                  {{category-item categoryId=category categories=categories}}
+                {{/each}}
+              {{/if}}
+            {{else}}
+              {{#if db.categories_en}}
+                <strong>Materialtyp: </strong>
+                {{#each category in db.categories_en}}
+                  {{category-item categoryId=category categories=categories}}
+                {{/each}}
+              {{/if}}
             {{/if}}
           </p>
           <p>

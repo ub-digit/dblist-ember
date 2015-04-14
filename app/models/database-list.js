@@ -3,7 +3,6 @@ import Database from 'dblist-ember/models/database';
 export default Ember.Object.extend({
   init: function() {
     var that = this;
-    //console.log(this.get('descriptions'));
     var databases = Ember.A([]);
 
     this.get('response.docs').forEach(function(entry) {
@@ -14,7 +13,6 @@ export default Ember.Object.extend({
     this.set('databases', databases);
 
     var facets = Ember.Object.create(this.get('facet_counts.facet_fields'));
-    //console.log('setting facets', facets);
     this.set('facets', facets);
   },
 

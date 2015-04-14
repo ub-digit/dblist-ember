@@ -4,7 +4,8 @@ import ENV from 'dblist-ember/config/environment';
 export default Ember.Route.extend({
   model: function() {
     var that = this;
-    var language = 'sv';
+    var application = this.container.lookup('application:main');
+    var language = application.get('locale');
     // Used to load data that will not be changed during runtime
     return Ember.RSVP.hash({
       descriptions: this.callQuery('/dblist_descriptions/select?q=*%3A*&wt=json&rows=10000'),
@@ -14,12 +15,10 @@ export default Ember.Route.extend({
   },
 
   setupController: function(controller, model){
+    var application = this.container.lookup('application:main');
+    var language = application.get('locale');
     controller.set('model', model);
-    var rootElement = Ember.$(ENV.APP.rootElement);
-    controller.set('model.externalParams', rootElement.data());
-    if (!controller.get('model.externalParams.lang')) {
-      controller.set('model.externalParams.lang', 'sv');
-    }
+    controller.set('model.language', language);
   },
 
   callQuery: function(link) {
