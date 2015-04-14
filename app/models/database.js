@@ -18,8 +18,11 @@ export default Ember.Object.extend({
       });
   }.on("init"),
 
+  //Returns the first description if there is one
   description: Ember.computed('descriptions', function(){
-    return this.get('descriptions')[0];
+    if (this.get('descriptions')) {
+      return this.get('descriptions')[0];
+    }
   }),
 
   // Returns true if main URL has reference to ezproxy
@@ -32,7 +35,9 @@ export default Ember.Object.extend({
 
   // Returns any additional descriptions as array
   extraDescriptions: function() {
-    return this.get('descriptions').slice(1);
+    if (this.get('descriptions')) {
+      return this.get('descriptions').slice(1);
+    }
   }.property('descriptions'),
 
   // Used for bootstrap logic
