@@ -9,7 +9,7 @@ export default Ember.Controller.extend({
   category: null,
   selectedKeywords: null,
   parentKeyword: null,
-  
+
   resetParams: function() {
     this.set('rows', ROW_INCREMENT);
     this.set('category', null);
@@ -100,6 +100,7 @@ export default Ember.Controller.extend({
     },
     setCategory: function(category) {
       this.set('category', category.hash_value);
+      this.set('rows', ROW_INCREMENT);
     },
     setParentKeyword: function(keyword) {
       this.set('parentKeyword', keyword.hash_value);
@@ -107,18 +108,20 @@ export default Ember.Controller.extend({
       this.set('rows', ROW_INCREMENT);
     },
     clearSearch: function() {
-      this.set('rows', ROW_INCREMENT);
       this.set('category', null);
       this.set('selectedKeywords', null);
       this.set('parentKeyword', null);
       this.set('searchString', null);
+      this.set('rows', ROW_INCREMENT);
     },
     clearParentKeyword: function() {
       this.set('selectedKeywords', null);
       this.set('parentKeyword', null);
+      this.set('rows', ROW_INCREMENT);
     },
     clearCategory: function() {
       this.set('category', null);
+      this.set('rows', ROW_INCREMENT);
     }
   }
 });
