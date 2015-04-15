@@ -14,11 +14,11 @@ export default Ember.Component.extend({
       nSelectedText: Ember.I18n.t('keywords.nSelected'),
       allSelectedText: Ember.I18n.t('keywords.allSelected'),
 
-      onChange:function(element) {
+      onChange:function() {
         var items = that.$('option:selected');
         var selected = [];
-        Ember.$(items).each(function(index, item){
-          selected.push($(this).val());
+        Ember.$(items).each(function(){
+          selected.push(Ember.$(this).val());
         });
         that.set('selected', selected.join(':'));
       }

@@ -23,15 +23,14 @@ export default Ember.Route.extend({
       refreshModel: true
     }
   },
-  model: function(params) {
-    var that = this;
+  model: function(params) {    
     var application = this.container.lookup('application:main');
     var language = application.get('locale');
     var rows = params.rows;
     var searchString = '((title%3A*' + params.searchString + '*)OR(libris_id%3A' + params.searchString + '))';
     var categoryString = '';
     var keywordString = '';
-    var facetString = '&facet=true&facet.field={!ex=dc}categories_' + language + '&facet.field={!ex=dt}keywords_' + language
+    var facetString = '&facet=true&facet.field={!ex=dc}categories_' + language + '&facet.field={!ex=dt}keywords_' + language;
 
     if (params.category) {
       categoryString = '&fq={!tag=dc}categories_' + language + '%3A' + params.category + '';
@@ -50,8 +49,8 @@ export default Ember.Route.extend({
         if (count < keywordsCount) {
           keywordString += ' OR ';
         }
-      })
-      keywordString += ')'
+      });
+      keywordString += ')';
     }
     if (!params.searchString) {
       searchString = '(*%3A*)';

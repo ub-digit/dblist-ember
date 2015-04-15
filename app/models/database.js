@@ -6,7 +6,7 @@ export default Ember.Object.extend({
   // Fetches Url items for Database-record
   getUrls: function(){
     var that = this;
-    var urls = this.callQuery('/dblist_urls/select?q=db_id%3A' + this.get('id') + '&wt=json&rows=10000').then(
+    this.callQuery('/dblist_urls/select?q=db_id%3A' + this.get('id') + '&wt=json&rows=10000').then(
       function(urls){
         // Store url value as url
         if (urls.length > 0) {
@@ -20,9 +20,9 @@ export default Ember.Object.extend({
 
   //Returns the first description if there is one
   description: Ember.computed('descriptions', function(){
-    if (this.get('descriptions')) {
-      return this.get('descriptions')[0];
-    }
+
+    return this.get('descriptions') ? this.get('descriptions')[0]: [];
+
   }),
 
   // Returns true if main URL has reference to ezproxy
@@ -35,9 +35,7 @@ export default Ember.Object.extend({
 
   // Returns any additional descriptions as array
   extraDescriptions: function() {
-    if (this.get('descriptions')) {
-      return this.get('descriptions').slice(1);
-    }
+    return this.get('descriptions') ? this.get('descriptions').slice(1) : [];
   }.property('descriptions'),
 
   // Used for bootstrap logic
@@ -46,7 +44,6 @@ export default Ember.Object.extend({
   }.property('id'),
 
   callQuery: function(link) {
-    var that = this;
     return Ember.$.ajax({
       type: 'GET',
       url: ENV.APP.serviceURL + link,

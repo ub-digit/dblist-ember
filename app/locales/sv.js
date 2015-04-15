@@ -11,7 +11,7 @@ export default {
         displays: "Visar",
         of: "av",
         hits: "databaser"
-      } 
+      }
     },
     keywords: {
       parentKeyword: "Huvudämne",
@@ -32,7 +32,5 @@ export default {
       termsOfUse: "Terms of use",
       expandPost: "Mer om databasen",
       showMoreRows: "Visa flera"
-    }
-
-    
-  }
+    }    
+  };

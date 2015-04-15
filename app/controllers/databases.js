@@ -77,15 +77,12 @@ export default Ember.Controller.extend({
   }.property('parentKeyword'),
 
   childKeywords: function() {
-    var that = this;
     if (this.get('parentKeyword') === null) {
       return [];
     } else {
       var childKeywords = this.get('keywords').filterBy('parent_id', this.get('selectedParentKeyword.id'));
       var selectList = Ember.A([]);
-      childKeywords.forEach(function(entry){
-        var label = entry.keyword;
-        //label += " (" + that.get('model').facetCount('keywords_sv', entry.hash_value) + ")"
+      childKeywords.forEach(function(entry){        
         selectList.pushObject({label: entry.keyword, value: entry.hash_value});
       });
       return selectList;
@@ -94,8 +91,6 @@ export default Ember.Controller.extend({
 
   actions: {
     increaseRows: function() {
-      var currentRows = this.get('rows');
-      var newRows = currentRows + ROW_INCREMENT;
       this.set('rows', 1000);
     },
     setCategory: function(category) {

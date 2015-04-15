@@ -1,8 +1,7 @@
 import Ember from 'ember';
 import Database from 'dblist-ember/models/database';
 export default Ember.Object.extend({
-  init: function() {
-    var that = this;
+  init: function() {    
     var databases = Ember.A([]);
 
     this.get('response.docs').forEach(function(entry) {

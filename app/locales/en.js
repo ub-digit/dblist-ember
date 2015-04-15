@@ -11,7 +11,7 @@ export default {
         displays: "Shows",
         of: "of",
         hits: "databases"
-      } 
+      }
     },
     keywords: {
       parentKeyword: "Main subject",
@@ -33,6 +33,4 @@ export default {
       expandPost: "More info about the database",
       showMoreRows: "Show more"
     }
-
-    
-  }
+  };
