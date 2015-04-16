@@ -55,7 +55,13 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
-
+    ENV.APP.serviceURL = 'http://130.241.35.208:90/solr';
+  }
+  if (environment === 'production-demo') {
+    ENV.APP.serviceURL = 'http://130.241.35.208:90/solr';
+  }
+  if (environment === 'production-test') {
+    ENV.APP.serviceURL = 'http://130.241.35.208:90/solr';
   }
 
   return ENV;
