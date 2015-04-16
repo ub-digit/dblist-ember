@@ -3,7 +3,7 @@
 <div class="row">
   <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
     <div class="input-group">
-      {{input value=searchString class="form-control" placeholder="Search Databas" aria-describedby="basic-addon2"}}
+      {{input value=searchString class="form-control" placeholderTranslation="search.placeholder" aria-describedby="basic-addon2"}}
       <span id="searchClear">
         <a {{action 'clearSearch'}}><i class="fa fa-times"></i></a>
       </span>
@@ -14,29 +14,40 @@
   </div>
 </div>
 
+<!-- Number of databases -->
+<div class="row">
+  <div class="col-xs-12 number-showed">
+    <div class="text-center">
+      <strong>{{t 'search.resultString.displays'}} {{model.databases.length}} {{t 'search.resultString.of'}} {{model.response.numFound}} {{t 'search.resultString.hits'}}</strong>
+    </div>
+  </div>
+</div>
+<!-- /number of databases -->
+
 <!-- filters -->
 <div class="row">
   <div class="col-xs-12">
-    <h4>S&ouml;k</h4>
+    <h4>{{t 'search.filterTitle'}}</h4>
   </div>
 </div>
 <div class="row">
   <div class="col-xs-12">
     <div class="btn-group btn-group-justified" role="group" aria-label="...">
-    
-
       <div class="btn-group" role="group">
         <button type="button" {{bind-attr class=":btn :dropdown-toggle selectedParentKeyword:btn-primary:btn-default"}} data-toggle="dropdown" aria-expanded="false">
           {{#if selectedParentKeyword}}
-          {{selectedParentKeyword.keyword}}
+            {{selectedParentKeyword.keyword}}
           {{else}}
-          Huvudaemne
+           {{t 'keywords.parentKeyword'}}
           {{/if}}
           <span class="caret"></span>
+          {{#if parentKeyword}}
+            <div class="clear-menu" {{action "clearParentKeyword" bubbles=false}}><i class="fa fa-times"></i></div>
+          {{/if}}
         </button>
         <ul class="dropdown-menu" role="menu">
           {{#each keyword in parentKeywords}}
-          <li><a href="" {{action 'setParentKeyword' keyword}}>{{keyword.keyword}} {{#if keyword.facetCount}}({{keyword.facetCount}}){{/if}}</a></li>
+          <li><a href="" {{action 'setParentKeyword' keyword}}>{{keyword.keyword}} ({{keyword.facetCount}})</a></li>
           {{/each}}
         </ul>
       </div>
@@ -46,13 +57,16 @@
           {{#if selectedCategory}}
           {{selectedCategory.category}}
           {{else}}
-          Materialtyp
+          {{t 'categories.category'}}
           {{/if}}
           <span class="caret"></span>
+          {{#if category}}
+            <div class="clear-menu" {{action "clearCategory" bubbles=false}}><i class="fa fa-times"></i></div>
+          {{/if}}
         </button>
         <ul class="dropdown-menu" role="menu">
           {{#each category in categoriesList}}
-          <li><a href="" {{action 'setCategory' category}}>{{category.category}} {{#if category.facetCount}}({{category.facetCount}}){{/if}}</a></li>
+          <li><a href="" {{action 'setCategory' category}}>{{category.category}} ({{category.facetCount}})</a></li>
           {{/each}}
         </ul>
       </div>
@@ -61,25 +75,15 @@
 </div>
 <!-- /filters -->
 
-<!-- Number of databases -->
-<div class="row">
-  <div class="col-xs-12 number-showed">
-    <div class="text-center">
-      <strong>Visar {{model.databases.length}} av {{model.response.numFound}} databaser</strong>
-    </div>
-  </div>
-</div>
-<!-- /number of databases -->
-
 <ul class="list-unstyled">
   {{#each db in model.databases}}
   <li class="database">
     <div class="row">
       <div class="col-xs-12">
-        <h2><a href="#">{{db.title}}</a></h2>
+        <h2><a {{bind-attr href=db.url.url}} target="_blank">{{db.title}}</a></h2>
       </div>
       <div class="col-sm-6">
-        <p>{{db.descriptions.firstObject.description}}
+        <p>{{db.description}}
         </p>
         {{#if db.descriptions.firstObject.url}}
         <p>
@@ -89,7 +93,11 @@
       </div>
       <div class="col-sm-6">
         <div class="availability">
-          <i class="fa fa-lock"></i> Tillgänglig för Göteborgs universitet
+        {{#if db.isLocked}}
+          <i class="fa fa-lock"></i> {{t 'database.locked'}}
+        {{else}}
+          <i class="fa fa-unlock"></i> {{t 'database.free'}}
+        {{/if}}
         </div>
         {{#if isSwedish}}
         {{keyword-list keywords=keywords dbKeywords=db.keywords_sv}}
@@ -100,7 +108,7 @@
       <div class="row collapse" {{bind-attr id=db.id}}>
         <div class="col-xs-12 col-sm-6 additional-info">
           {{#each desc in db.extraDescriptions}}
-          <p>{{desc.description}}
+          <p>{{desc}}
           </p>
           {{#if desc.url}}
           <p>
@@ -111,21 +119,21 @@
 
           <p>
             {{#each at in db.alternate_titles}}
-            <strong>Alternativ titel: </strong>{{at}}<br/>
+            <strong>{{t 'database.alternativeTitle'}}: </strong>{{at}}<br/>
             {{/each}}
             {{#each publisher in db.publishers}}
-            <strong>Leverantör: </strong>{{publisher}}<br/>
+            <strong>{{t 'database.publisher'}}: </strong>{{publisher}}<br/>
             {{/each}}
             {{#if isSwedish}}
               {{#if db.categories_sv}}
-                <strong>Materialtyp: </strong>
+                <strong>{{t 'categories.category'}}: </strong>
                 {{#each category in db.categories_sv}}
                   {{category-item categoryId=category categories=categories}}
                 {{/each}}
               {{/if}}
             {{else}}
               {{#if db.categories_en}}
-                <strong>Materialtyp: </strong>
+                <strong>{{t 'categories.category'}}: </strong>
                 {{#each category in db.categories_en}}
                   {{category-item categoryId=category categories=categories}}
                 {{/each}}
@@ -133,17 +141,25 @@
             {{/if}}
           </p>
           <p>
-            <i class="fa fa-link"></i> {{#link-to 'database' db.libris_id }}Länk till denna post{{/link-to}}
+          {{#if db.extraUrls}}
+            {{#each url in db.extraUrls}}
+              <strong>{{t 'database.alternativeURL'}}: </strong>
+              <a {{bind-attr href=url.url}} target="_blank">{{url.url}}</a><br/>
+            {{/each}}
+          {{/if}}
+          </p>
+          <p>
+            <i class="fa fa-link"></i> {{#link-to 'database' db.libris_id }}{{t 'database.link'}}{{/link-to}}
           </p>
         </div>
         <div class="col-xs-12 col-sm-6 additional-info">
-          <p><strong>Terms of use:</strong><br/>
+          <p><strong>{{t 'database.termsOfUse'}}:</strong><br/>
             Authorized user Definition: Faculty staff, researchers and students at the University of Gothenburg can use the library card number to get access, to most of the University Library e-resources when off-campus.</p>
         </div>
       </div>
       <div class="row">
         <div class="col-xs-12 more-info">
-          <a data-toggle="collapse" {{bind-attr href=db.objectIdentifier}} aria-expanded="false" {{bind-attr aria-controls=db.id}}>Mer om databasen</a>
+          <a data-toggle="collapse" {{bind-attr href=db.objectIdentifier}} aria-expanded="false" {{bind-attr aria-controls=db.id}}>{{t 'database.expandPost'}}</a>
         </div>
       </div>
     </li>
@@ -153,7 +169,7 @@
   {{#if displayExtraRowsButton}}
   <div class="row">
     <div class="col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
-      <button class="btn btn-default btn-block" {{action 'increaseRows'}}>Visa fler ({{rowsToGo}})</button>
+      <button class="btn btn-default btn-block" {{action 'increaseRows'}}>{{t 'database.showMoreRows'}} ({{rowsToGo}})</button>
     </div>
   </div>
   {{/if}}

@@ -7,8 +7,8 @@ export default Ember.Component.extend({
   keywordObjects: function() {
     var that = this;
     var keywordObjects = Ember.A([]);
-    console.log(this.get('keywords'));
-    console.log(this.get('dbKeywords'));
+//    console.log(this.get('keywords'));
+//    console.log(this.get('dbKeywords'));
     if (this.get('dbKeywords')) {
       this.get('dbKeywords').forEach(function(entry) {
         keywordObjects.pushObject(that.get('keywords').findBy('hash_value', entry));
@@ -19,7 +19,6 @@ export default Ember.Component.extend({
 
   parentKeywords: function() {
     var that = this;
-    console.log(this.get('keywordObjects'));
     var parentKeywords = this.get('keywordObjects').filterBy('parent_id', undefined);
     parentKeywords.forEach(function(entry) {
       var childKeywords = that.get('keywordObjects').filterBy('parent_id', entry.id);

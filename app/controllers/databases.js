@@ -42,11 +42,11 @@ export default Ember.Controller.extend({
 
     // Add facet count unless parentKeyword is selected
     keywords.forEach(function(entry){
-      if (!that.get('parentKeyword')) {
+      //if (!that.get('parentKeyword')) {
       entry.set('facetCount', that.get('model').facetCount('keywords_' + that.get('language'), entry.hash_value));
-      } else {
-        entry.set('facetCount', null); 
-      }
+      //} else {
+      //  entry.set('facetCount', null);
+      //}
     });
     return keywords;
   }),
@@ -54,14 +54,14 @@ export default Ember.Controller.extend({
   categoriesList: Ember.computed('categories', 'model', 'category', function(){
     var that = this;
     var categories = this.get('categories');
-    
+
     // Add facet count unless category is selected
     categories.forEach(function(entry){
-      if (!that.get('category')) {
-        entry.set('facetCount', that.get('model').facetCount('categories_' + that.get('language'), entry.hash_value)); 
-      } else {
-        entry.set('facetCount', null); 
-      }
+      //if (!that.get('category')) {
+        entry.set('facetCount', that.get('model').facetCount('categories_' + that.get('language'), entry.hash_value));
+      //} else {
+      //  entry.set('facetCount', null);
+      //}
     });
     return categories;
   }),
@@ -77,15 +77,12 @@ export default Ember.Controller.extend({
   }.property('parentKeyword'),
 
   childKeywords: function() {
-    var that = this;
     if (this.get('parentKeyword') === null) {
       return [];
     } else {
       var childKeywords = this.get('keywords').filterBy('parent_id', this.get('selectedParentKeyword.id'));
       var selectList = Ember.A([]);
-      childKeywords.forEach(function(entry){
-        var label = entry.keyword;
-        //label += " (" + that.get('model').facetCount('keywords_sv', entry.hash_value) + ")"
+      childKeywords.forEach(function(entry){        
         selectList.pushObject({label: entry.keyword, value: entry.hash_value});
       });
       return selectList;
@@ -94,24 +91,32 @@ export default Ember.Controller.extend({
 
   actions: {
     increaseRows: function() {
-      var currentRows = this.get('rows');
-      var newRows = currentRows + ROW_INCREMENT;
       this.set('rows', 1000);
     },
     setCategory: function(category) {
       this.set('category', category.hash_value);
+      this.set('rows', ROW_INCREMENT);
     },
     setParentKeyword: function(keyword) {
       this.set('parentKeyword', keyword.hash_value);
       this.set('selectedKeywords', null);
       this.set('rows', ROW_INCREMENT);
     },
-    clearSearch: function() {      
-      this.set('rows', ROW_INCREMENT);
+    clearSearch: function() {
       this.set('category', null);
       this.set('selectedKeywords', null);
       this.set('parentKeyword', null);
       this.set('searchString', null);
+      this.set('rows', ROW_INCREMENT);
+    },
+    clearParentKeyword: function() {
+      this.set('selectedKeywords', null);
+      this.set('parentKeyword', null);
+      this.set('rows', ROW_INCREMENT);
+    },
+    clearCategory: function() {
+      this.set('category', null);
+      this.set('rows', ROW_INCREMENT);
     }
   }
 });

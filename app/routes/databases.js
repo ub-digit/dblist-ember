@@ -23,36 +23,34 @@ export default Ember.Route.extend({
       refreshModel: true
     }
   },
-  model: function(params) {
-    var that = this;
+  model: function(params) {    
     var application = this.container.lookup('application:main');
-    console.log(application.get('locale'));
     var language = application.get('locale');
     var rows = params.rows;
     var searchString = '((title%3A*' + params.searchString + '*)OR(libris_id%3A' + params.searchString + '))';
     var categoryString = '';
     var keywordString = '';
-    var facetString = '&facet=true&facet.field=categories_' + language + '&facet.field=keywords_' + language
+    var facetString = '&facet=true&facet.field={!ex=dc}categories_' + language + '&facet.field={!ex=dt}keywords_' + language;
 
     if (params.category) {
-      categoryString = 'AND(categories_' + language + '%3A' + params.category + ')';
+      categoryString = '&fq={!tag=dc}categories_' + language + '%3A' + params.category + '';
     }
     if (params.parentKeyword) {
-      keywordString = 'AND(keywords_' + language + '%3A' + params.parentKeyword + ')';
+      keywordString = '&fq={!tag=dt}keywords_' + language + '%3A' + params.parentKeyword + '';
     }
     if (params.selectedKeywords) {
       var list = Ember.A(params.selectedKeywords.split(':'));
-      keywordString += 'AND(';
+      keywordString += '&fq={!tag=dt}keywords_' + language + '%3A(';
       var keywordsCount = list.length;
       var count = 0;
       list.forEach(function(entry){
-        keywordString += '(keywords_' + language + '%3A' + entry + ')';
+        keywordString += entry;
         count++;
         if (count < keywordsCount) {
-          keywordString += 'OR';
+          keywordString += ' OR ';
         }
-      })
-      keywordString += ')'
+      });
+      keywordString += ')';
     }
     if (!params.searchString) {
       searchString = '(*%3A*)';
@@ -73,7 +71,6 @@ export default Ember.Route.extend({
   },
 
   setupController: function(controller, model) {
-    model.applicationModel = controller.get('controllers.application.model');
     var databaseList = DatabaseList.create(model);
     controller.set('model', databaseList);
   }

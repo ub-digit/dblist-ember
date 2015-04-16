@@ -1,16 +1,41 @@
 import Ember from 'ember';
+import ENV from 'dblist-ember/config/environment';
+
 export default Ember.Object.extend({
-  //init: function() {
-  //  console.log("db-init", this.controllerFor('application'));
-  //},
+
+  // Fetches Url items for Database-record
+  getUrls: function(){
+    var that = this;
+    this.callQuery('/dblist_urls/select?q=db_id%3A' + this.get('id') + '&wt=json&rows=10000').then(
+      function(urls){
+        // Store url value as url
+        if (urls.length > 0) {
+          that.set('url', urls.objectAt(0));
+        }
+        if (urls.length > 1) {
+          that.set('extraUrls', urls.slice(1));
+        }
+      });
+  }.on("init"),
+
+  //Returns the first description if there is one
+  description: Ember.computed('descriptions', function(){
+
+    return this.get('descriptions') ? this.get('descriptions')[0]: [];
+
+  }),
+
+  // Returns true if main URL has reference to ezproxy
+  isLocked: Ember.computed('url', function(){
+    if (this.get('url') && this.get('url').url.indexOf('ezproxy.ub.gu.se') !== -1) {
+      return true;
+    }
+    return false;
+  }),
 
   // Returns any additional descriptions as array
   extraDescriptions: function() {
-    if (this.get('descriptions').length > 1) {
-      return this.get('descriptions').slice(1);
-    } else {
-      return [];
-    }
+    return this.get('descriptions') ? this.get('descriptions').slice(1) : [];
   }.property('descriptions'),
 
   // Used for bootstrap logic
@@ -18,20 +43,26 @@ export default Ember.Object.extend({
     return '#' + this.get('id');
   }.property('id'),
 
-  //keywords: Ember.computed('keywords_sv', 'keywords_en', function(){
-    //console.log("fdjjfdfdskfds", this.locale, this);
-    //var application = this.container.lookup('application:main');
-    //var language = application.get('locale');
-    //var keywords = this.get('keywords_' + language);
-    //return keywords;
-  //}),
-/*
-  categories: Ember.computed('categories_sv', 'categories_en', function(){
-    console.log(Ember.I18n.locale);
-    var application = this.container.lookup('application:main');
-    var language = application.get('locale');
-    var language = 'sv';
-    return this.get('categories_' + language);
-  })
-*/
+  callQuery: function(link) {
+    return Ember.$.ajax({
+      type: 'GET',
+      url: ENV.APP.serviceURL + link,
+      data: {
+      },
+      dataType: 'jsonp',
+      jsonp: 'json.wrf',
+      contentType: "application/javascript; charset=utf-8"
+    }).then(function(response) {
+      var list = Ember.A([]);
+      response.response.docs.forEach(function(entry) {
+        list.pushObject(entry);
+      });
+
+      return list;
+    },
+    function(error) {
+      console.log(error);
+    });
+  }
+
 });

@@ -2,10 +2,10 @@ import Ember from 'ember';
 import ENV from 'dblist-ember/config/environment';
 
 export default Ember.Route.extend({
-  model: function() {
-    var that = this;
+  model: function() {    
     var application = this.container.lookup('application:main');
     var language = application.get('locale');
+
     // Used to load data that will not be changed during runtime
     return Ember.RSVP.hash({
       descriptions: this.callQuery('/dblist_descriptions/select?q=*%3A*&wt=json&rows=10000'),
@@ -28,7 +28,8 @@ export default Ember.Route.extend({
     data: {
     },
     dataType: 'jsonp',
-    jsonp: 'json.wrf'
+    jsonp: 'json.wrf',
+    contentType: "application/javascript"
   }).then(function(response) {
     var list = Ember.A([]);
     response.response.docs.forEach(function(entry) {
