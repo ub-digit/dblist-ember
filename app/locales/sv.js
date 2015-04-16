@@ -14,7 +14,7 @@ export default {
       }
     },
     keywords: {
-      parentKeyword: "Huvudämne",
+      parentKeyword: "Ämne",
       noneSelected: "Ämnesord",
       nSelected: " ämnen valda",
       allSelected: "Alla ämnen valda"
@@ -32,5 +32,5 @@ export default {
       termsOfUse: "Terms of use",
       expandPost: "Mer om databasen",
       showMoreRows: "Visa flera"
-    }    
+    }
   };

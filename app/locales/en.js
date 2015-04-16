@@ -14,8 +14,8 @@ export default {
       }
     },
     keywords: {
-      parentKeyword: "Main subject",
-      noneSelected: "Subject",
+      parentKeyword: "Subject",
+      noneSelected: "Subject terms",
       nSelected: " subjects selected",
       allSelected: "All subjects selected"
     },
