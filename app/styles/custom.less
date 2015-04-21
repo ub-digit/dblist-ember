@@ -1,5 +1,16 @@
 #ember-app-dblist-ember {
-  padding-bottom:40px;
+
+  .loader {
+    display: none;
+    position: absolute;
+    margin-left: 10px;
+  }
+  &.loading {
+    .loader {
+      display: inline-block;
+    }
+  }
+
   #searchClear {
     position: absolute;
     z-index: 1000;
@@ -35,22 +46,22 @@
     .subjects {
       line-height:24px;
       .label-primary {
-  			border-radius: 1em;
-  		}
-  		.label-default {
-  			background-color:#fff;
-  			border: 1px solid;
-  			color:#777;
-  			font-weight:normal;
-  		}
+        border-radius: 1em;
+      }
+      .label-default {
+        background-color:#fff;
+        border: 1px solid;
+        color:#777;
+        font-weight:normal;
+      }
       .label-primary {
         clear:left;
       }
     }
 
     .additional-info {
-  		font-size:12px;
-  	}
+      font-size:12px;
+    }
 
     .more-info {
       a:link, a:visited {

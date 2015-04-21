@@ -23,7 +23,7 @@ export default Ember.Route.extend({
       refreshModel: true
     }
   },
-  model: function(params) {    
+  model: function(params) {
     var application = this.container.lookup('application:main');
     var language = application.get('locale');
     var rows = params.rows;
@@ -68,6 +68,13 @@ export default Ember.Route.extend({
     function(error) {
       console.log(error);
     });
+  },
+
+  beforeModel: function() {
+    Ember.$('#ember-app-dblist-ember').addClass('loading');
+  },
+  afterModel: function() {
+    Ember.$('#ember-app-dblist-ember').removeClass('loading');
   },
 
   setupController: function(controller, model) {

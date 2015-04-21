@@ -2,7 +2,7 @@ import Ember from 'ember';
 import ENV from 'dblist-ember/config/environment';
 
 export default Ember.Route.extend({
-  model: function() {    
+  model: function() {
     var application = this.container.lookup('application:main');
     var language = application.get('locale');
 

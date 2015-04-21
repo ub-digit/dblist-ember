@@ -18,7 +18,7 @@
 <div class="row">
   <div class="col-xs-12 number-showed">
     <div class="text-center">
-      <strong>{{t 'search.resultString.displays'}} {{model.databases.length}} {{t 'search.resultString.of'}} {{model.response.numFound}} {{t 'search.resultString.hits'}}</strong>
+      <strong>{{t 'search.resultString.displays'}} {{model.databases.length}} {{t 'search.resultString.of'}} {{model.response.numFound}} {{t 'search.resultString.hits'}}</strong> <span class="loader"><i class="fa fa-spinner fa-spin"></i></span>
     </div>
   </div>
 </div>
@@ -169,7 +169,7 @@
   {{#if displayExtraRowsButton}}
   <div class="row">
     <div class="col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
-      <button class="btn btn-default btn-block" {{action 'increaseRows'}}>{{t 'database.showMoreRows'}} ({{rowsToGo}})</button>
+      <button class="btn btn-default btn-block" {{action 'increaseRows'}}>{{t 'database.showMoreRows'}} ({{rowsToGo}}) <span class="loader"><i class="fa fa-spinner fa-spin"></i></span></button>
     </div>
   </div>
   {{/if}}
