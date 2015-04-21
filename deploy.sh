@@ -56,12 +56,14 @@ esac
 # Location: production: /apps/appName/, test: /apps/test/appName
 # Domain name: production: appName.topDomain, test: appName-test.topDomain
 # -------------------------------------------------- #
-if [[ "$environment" = "production" ]]; then
-    remote_app_location="/apps/$appname"
-    app_domain_name="$app_domain_name.$top_domain"
+if [[ ! "$environment" = "production" ]]; then
+  remote_app_location="/apps/$environment/$appname"
+  app_domain_name="$app_domain_name-$environment.$top_domain"
+  build_environment="production-${environment}"
 else
-    remote_app_location="/apps/$environment/$appname"
-    app_domain_name="$app_domain_name-$environment.$top_domain"
+  remote_app_location="/apps/$appname"
+  app_domain_name="$app_domain_name.$top_domain"
+  build_environment="production"
 fi
 # -------------------------------------------------- #
 # Check if application directory exists
@@ -80,8 +82,7 @@ fi
 # -------------------------------------------------- #
 # Rebuild dist folder
 # -------------------------------------------------- #
-echo ember build --environment="production-$environment"
-ember build --environment="production-$environment"
+ember build --environment=${build_environment}
 
 if [ -d "$local_app_location/dist" ]; then
   echo "Done building dist!"
